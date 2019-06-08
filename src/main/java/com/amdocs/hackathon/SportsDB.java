@@ -59,7 +59,7 @@ public class SportsDB {
 
   public List<UserActivities> getActivitiesBookedTodayAfterCurrentTime(AllCreateActivitiesRequest request) {
     return jdbcTemplate.query(GET_ALL_ACTIVITIES_BOOKED_TODAY_AFTER_CURRENT_TIME,
-      new MapSqlParameterSource().addValue(EMAIL, request.email())
+      new MapSqlParameterSource()
         .addValue(START, request.startSearch())
         .addValue(DATE, request.today())
         .addValue(GAME_ID_LIST, request.integerList()), userActivitiesMapper);
@@ -74,7 +74,7 @@ public class SportsDB {
   }
 
   public List<Activity> getActivitiesAfterCurrentTime(long start, List<Integer> list) {
-    return jdbcTemplate.query(GET_ACTIVITIES_WHICH_END_LATER,
+    return jdbcTemplate.query(GET_ACTIVITIES_WHICH_START_LATER,
       new MapSqlParameterSource().addValue(START, start)
         .addValue(GAME_ID_LIST, list), activityMapper);
   }

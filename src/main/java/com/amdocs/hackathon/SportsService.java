@@ -93,7 +93,7 @@ public class SportsService {
           }
         }
       }
-      int ns = request.startSearch();
+      int ns = Math.max(request.startSearch()+1, activity.start());
       int taken = 0;
       while (ns < activity.end()) {
         if (visited[ns] == 0) {

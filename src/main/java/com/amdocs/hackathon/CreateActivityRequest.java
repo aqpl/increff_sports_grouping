@@ -25,6 +25,7 @@ public class CreateActivityRequest {
   private String date;
   @Expose
   private int totalAllowed;
+  // not to be done by client
   @Expose
   private int registered;
 
