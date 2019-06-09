@@ -127,5 +127,13 @@ public class SportsDB {
         .addValue(START, request.start())
         .addValue(END, request.end()));
   }
+
+  public List<JoinActivityRequest> getUserActivities(String email, String date, int start) {
+    return jdbcTemplate.query(GET_USER_ACT,
+      new MapSqlParameterSource().addValue(EMAIL, email)
+      .addValue(DATE, date)
+      .addValue(START, start)
+      , joinActivityRequestMapper);
+  }
 }
 

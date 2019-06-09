@@ -26,10 +26,10 @@ public class SportsService {
     int end = activity.end();
     for (Activity activity1 : activities) {
       if ((activity1.start() >= start && activity1.end() > start) || (activity1.end() >= end && activity1.start() > end)) {
-        return false;
+        return true;
       }
     }
-    return true;
+    return false;
   }
 
   public void insertActivity(Activity activity) {
@@ -77,7 +77,19 @@ public class SportsService {
     List<UserActivities> userActivities = sportsDB.getActivitiesBookedTodayAfterCurrentTime(activitiesRequest);
     userActivities = getActivitiesWithinRadius(userActivities, activitiesRequest.radius(), activitiesRequest.latitude(), activitiesRequest.longitude());
     List<Activity> activitiesAfterCurrentTime = sportsDB.getActivitiesAfterCurrentTime(activitiesRequest.startSearch(), activitiesRequest.integerList());
+    activitiesAfterCurrentTime = getActivitiesInRadius(activitiesAfterCurrentTime, activitiesRequest.radius(), activitiesRequest.latitude(), activitiesRequest.longitude());
     return getActivitiesUserCanCreate(activitiesAfterCurrentTime, userActivities, activitiesRequest);
+  }
+
+  private List<Activity> getActivitiesInRadius(List<Activity> activitiesAfterCurrentTime, double radius, double latitude, double longitude) {
+    List<Activity> newActivities = new ArrayList<>(1);
+    for (int i = 0; i < activitiesAfterCurrentTime.size(); i++) {
+      Activity userActivities = activitiesAfterCurrentTime.get(i);
+      if (getDistanceInKm(userActivities.latitude(), userActivities.longitude(), latitude, longitude) <= radius) {
+        newActivities.add(userActivities);
+      }
+    }
+    return newActivities;
   }
 
   private List<ActivitiesToCreate> getActivitiesUserCanCreate(List<Activity> activitiesAfterCurrentTime, List<UserActivities> userActivities, AllCreateActivitiesRequest request) {
@@ -190,5 +202,9 @@ public class SportsService {
   public void joinActivity(JoinActivityRequest request) {
     sportsDB.joinActivity(request);
     sportsDB.updateRegisteredCount(request);
+  }
+
+  public List<JoinActivityRequest> getAllUserActivities(String email, String date, int start) {
+    return sportsDB.getUserActivities(email, date, start);
   }
 }

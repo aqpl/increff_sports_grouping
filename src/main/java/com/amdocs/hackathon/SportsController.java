@@ -64,6 +64,10 @@ public class SportsController {
     sportsService.joinActivity(request);
   }
 
+  @PostMapping("/getAllActivitiesOfUser")
+  public List<JoinActivityRequest> getAllUserActivities(@RequestBody Email email) {
+    return sportsService.getAllUserActivities(email.email(), getCurrentDay(), getCurrentHour());
+  }
 
 
 }

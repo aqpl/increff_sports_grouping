@@ -41,6 +41,7 @@ public class DBQueries {
     String ADD_USER_ACTIVITY = "INSERT INTO user_activities (user_email, owner_email, name, gameid, latitude, longitude, start, end, date, total_allowed, registered) VALUES(:user_email, :owner_email, :name, :gameid, :latitude, :longitude, :start, :end, :date, :total_allowed, :registered)";
     String INSERT_USER_ACTIVITY = "INSERT INTO user_part_of_activities (email, user_email, owner_email, name, gameid, latitude, longitude, start, end, date) VALUES(:email, :user_email, :owner_email, :name, :gameid, :latitude, :longitude, :start, :end, :date)";
     String UPDATE_REGISTERED_COUNT = "UPDATE user_activities SET registered = registered + 1 WHERE date = :date AND user_email = :user_email AND owner_email = :owner_email AND name = :name AND gameid = :gameid AND start = :start AND end = :end";
-    String GET_ALL_USER_PART_OF_ACTIVITIES = "SELECT * FROM user_activities WHERE email = :email";
+    String GET_ALL_USER_PART_OF_ACTIVITIES = "SELECT * FROM user_part_of_activities WHERE email = :email";
+    String GET_USER_ACT = "SELECT * FROM user_part_of_activities WHERE email = :email AND date = :date AND start > :start";
   }
 }

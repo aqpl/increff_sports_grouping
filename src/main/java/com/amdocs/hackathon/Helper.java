@@ -27,7 +27,11 @@ public class Helper {
   public static String parseTime(int time) {
     if (time == 0) {
       return "12:00 AM";
-    } else if (time < 12) {
+    }
+    else if (time == 12) {
+      return "12:00 PM";
+    }
+    else if (time < 12) {
       return time +":00 AM";
     } else {
       time -= 12;
